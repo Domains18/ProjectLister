@@ -7,7 +7,7 @@ CREATE TABLE Address(
     CONSTRAINT PK_District PRIMARY KEY (DistrictID)
 );
 CREATE TABLE Voter_Table(
-    AADHAAR char(15) NOT NULL,
+    Identifier char(15) NOT NULL,
     FirstName VARCHAR(30) NOT NULL,
     Lastname VARCHAR(50) NOT NULL,
     MotherName VARCHAR(30),
@@ -17,7 +17,7 @@ CREATE TABLE Voter_Table(
     Age int not null,
     DistrictID integer NOT NULL,
     Phone Numeric NOT NULL,
-    CONSTRAINT PK_VOTER PRIMARY KEY (AADHAAR),
+    CONSTRAINT PK_VOTER PRIMARY KEY (Identifier),
     CONSTRAINT FK_DISTRICT FOREIGN KEY (DistrictID) references Address(DistrictID)
 );
 CREATE TABLE Candidate_Type(
@@ -44,13 +44,13 @@ CREATE TABLE User_Type(
 );
 CREATE TABLE Candidate_Table(
     CandidateID int not null,
-    AADHAAR char(15) not null,
+    Identifier char(15) not null,
     CandidateTypeID int not null,
     PartyID int not null,
     ElectionID int not null,
     DistrictID int not null,
     CONSTRAINT PK_CANDIDATE PRIMARY KEY (CandidateID),
-    CONSTRAINT FK_VOTER FOREIGN KEY (AADHAAR) references Voter_Table(AADHAAR),
+    CONSTRAINT FK_VOTER FOREIGN KEY (Identifier) references Voter_Table(Identifier),
     CONSTRAINT FK_DISTRICT_2 FOREIGN KEY (DistrictID) references Address(DistrictID),
     CONSTRAINT FK_ELECTION FOREIGN KEY (ElectionID) references Election_Table(ElectionID),
     CONSTRAINT FK_PARTY FOREIGN KEY (PARTYID) references Party_Table(PartyID),
@@ -60,10 +60,10 @@ CREATE TABLE User_Table(
     VoterID varchar(10) not null,
     Def_Password varchar(50) not null,
     isActive BOOLEAN not null,
-    AADHAAR char(15) not null,
+    Identifier char(15) not null,
     UserTypeID int not null,
     CONSTRAINT PK_USER PRIMARY KEY (VoterID),
-    CONSTRAINT FK_VOTER_2 FOREIGN KEY (AADHAAR) references Voter_Table(AADHAAR),
+    CONSTRAINT FK_VOTER_2 FOREIGN KEY (Identifier) references Voter_Table(Identifier),
     CONSTRAINT FK_USERID FOREIGN KEY (UserTypeID) references User_Type(UserTypeID)
 );
 CREATE TABLE Vote_Table(
