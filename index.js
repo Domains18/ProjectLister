@@ -25,16 +25,16 @@ const posts = [
 
 api.get('/posts', authenticateToken, (req, res) => {
     // console.log(req.user.name)
-    res.json(posts.filter(post => post.userName === req.user.name));
+    res.json(posts.filter(post => post.userName === req.user.name))
 });
 
 api.post('/login', (req, res) => {
     //authenticate user
     const userName = req.body.userName
     const user = { name: userName };
-    
+
     const accessToken = jwt.sign(user, process.env.JWT_SECRET);
-    res.json({ accessToken: accessToken})
+    res.json({ accessToken: accessToken })
 })
 
 function authenticateToken(req, res, next) {
@@ -50,7 +50,6 @@ function authenticateToken(req, res, next) {
     });
 
 }
-
 
 
 
