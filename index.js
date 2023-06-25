@@ -1,46 +1,22 @@
 require('dotenv').config();
 const express = require('express');
-const api = express();
-const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 
-
-api.use(express.json());
-
-const posts = [
-    {
-        userName: 'John',
-        title: 'Post 2'
-    },
-    {
-        userName: 'Kyle',
-        title: 'Post 3'
-    },
-    {
-        userName: 'Bashir',
-        title: 'Post 4'
-    },
-]
+const app = express();
+const port = process.env.PORT || 5000;
 
 
-api.get('/posts', authenticateToken, (req, res) => {
-    // console.log(req.user.name)
-    res.json(posts.filter(post => post.userName === req.user.name))
-});
+// Middleware and customizations
+app.disable('x-powered-by');
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
 
-function authenticateToken(req, res, next) {
-    const authHeaders = req.headers['authorization']
-    const token = authHeaders && authHeaders.split(' ')[1]
-    // console.log(token)
-    if (token === null) return res.sendStatus(401);
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) res.sendStatus(403);
-        req.user = user;
-        next();
+
+app.on('ready', () => {
+    app.listen(port, () => {
+        console.log(`App running on port ${port}`)
     });
-
-}
-
-
-
-api.listen(3000, () => console.log('API running on port 3000'));
+});
