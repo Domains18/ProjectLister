@@ -126,5 +126,15 @@ UserSchema.methods.generateResetToken = async function () {
 
     //create hash
     const resetTokenHash = crypto
-        .createHmac("sha256", resetTokenS)
-}
+        .createHmac("sha256", resetTokenSecret)
+        .update(resetToken)
+        .digest("hex")
+    
+    user.resetPasswordToken = resetTokenHash;
+    user.resetPasswordTokenExpiry = Date.now() + (RESET_PASSWORD_TOKEN.expiry || 5) * 60 * 60 * 1000;
+    await user.save();
+    return resetToken;
+};
+
+const UserModel = mongoose.model("User", UserSchema);
+module.exports = UserModel;
