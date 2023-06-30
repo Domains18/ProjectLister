@@ -8,6 +8,7 @@ mongoose.set("bufferCommands", false);
 
 const db = mongoose.connect(connURI);
 
+
 db.catch((err) => {
     if (err.message.code === "ETIMEOUT") {
         console.log(`${err.message.code}`);
