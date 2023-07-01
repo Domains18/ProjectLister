@@ -16,4 +16,4 @@ db.catch((err) => {
 });
 
 
-module.exports = db;
+module.exports = { db };

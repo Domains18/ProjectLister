@@ -1,7 +1,4 @@
 
-
-
-
 const main = require('./email.service');
 
 const fixedMailOptions = {
