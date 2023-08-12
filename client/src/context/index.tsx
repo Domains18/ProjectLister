@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect} from "react";
 
 interface User {
     name: string;
@@ -28,12 +28,20 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
     });
     const [token, _setToken] = useState<string | null>(null);
 
-    const setToken = (newToken: string | null) => {
-        _setToken(newToken);
-        if (newToken) {
-            localStorage.setItem('ACCESS_TOKEN', newToken);
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem('token', token as string );
         } else {
-            localStorage.removeItem('ACCESS_TOKEN');
+            localStorage.removeItem('token');
+        }
+    }, [token]);
+
+    const setToken = (token: React.SetStateAction<string | null>) => {
+        _setToken(token);
+        if (token) {
+            localStorage.setItem('token', token as string );
+        } else {
+            localStorage.removeItem('token');
         }
     };
 

@@ -1,31 +1,26 @@
-import {Navigate } from 'react-router-dom'
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import DefaultLayout from "./layout/DefaultLayout";
+import GuestLayout from "./layout/GuestLayout";
+import Dashboard from "./components/Dashboard";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import AllowedLayout from "./layout/AllowedLayout";
-import AuthLayout from "./layout/AuthLayout";
-import Dashboard from './components/Dashboard';
 
-
-// interface ContextProviderProps {
-//     children: ReactNode;
-// }
-const router= createBrowserRouter([
+const Router = createBrowserRouter([
     {
-        path: "/", element: <AuthLayout />,
+        path: "/", element: <DefaultLayout />, 
         children: [
-            { path: "/", element: <Navigate to="/login" /> },
-            { path: "/login", element: <Login /> },
-            { path: "/register", element: <Register /> },
+            { path: "/", element: <Navigate to="/dashboard" /> },
+            { path: "/dashboard", element: <Dashboard/> },
         ]
     },
     {
-        path: "/", element: <AllowedLayout />,
+        path: "/", element: <GuestLayout />,
         children: [
-            { path: "/dashboard", element: <Dashboard /> },
+            { path: "/login", element: <Login/> },
+            { path: "/register", element: <Register/> },
         ]
     }
-])
+]);
 
 
-export default router;
+export default Router;
