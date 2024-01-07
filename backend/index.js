@@ -29,6 +29,9 @@ app.use('/', function (req, res) {
 });
 
 
+const {connectDb} = require('./database/config');
+connectDb().then(r => console.log(r)).catch(err => console.log(err));
+
 const server = http.createServer(app);
 Promise.resolve()
     .then(() => {
